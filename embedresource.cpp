@@ -1,50 +1,54 @@
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
 #include <iostream>
+#include <algorithm>
+#include <fstream>
+#include <filesystem>
 
-using namespace std;
-using namespace boost::filesystem;
 
 int main(int argc, char** argv)
 {
-    if (argc < 3) {
+    if (argc < 3)
+    {
         fprintf(stderr, "USAGE: %s {sym} {rsrc}\n\n"
-                        "  Creates {sym}.c from the contents of {rsrc}\n",
+                        "  Creates {sym}.cpp from the contents of {rsrc}\n",
                 argv[0]);
+
         return EXIT_FAILURE;
     }
 
-    path dst{argv[1]};
-    path src{argv[2]};
+    //std::ofstream debug_log("debug_log.txt");
 
-    string sym = src.filename().string();
-    replace(sym.begin(), sym.end(), '.', '_');
-    replace(sym.begin(), sym.end(), '-', '_');
+    std::filesystem::path dst{argv[1]};
+    std::filesystem::path src{argv[2]};
 
-    create_directories(dst.parent_path());
 
-    boost::filesystem::ofstream ofs{dst};
+    std::string symbol_name = src.u8string();
+    std::replace(symbol_name.begin(), symbol_name.end(), '.', '_');
+    std::replace(symbol_name.begin(), symbol_name.end(), '-', '_');
+    std::replace(symbol_name.begin(), symbol_name.end(), '/', '_');
 
-    boost::filesystem::ifstream ifs{src};
+    std::filesystem::create_directories(dst.parent_path());
 
-    ofs << "#include <stdlib.h>" << endl;
-    ofs << "extern const char _resource_" << sym << "[] = {" << endl;
+    std::ofstream ofs{dst};
+    std::ifstream ifs{src};
+
+    ofs << "#include <stdlib.h>" << std::endl;
+    ofs << "extern const char resource_" << symbol_name << "[] = {" << std::endl;
 
     size_t lineCount = 0;
     while (!ifs.eof())
     {
         char c;
         ifs.get(c);
-        ofs << "0x" << hex << (c&0xff) << ", ";
+        ofs << "0x" << std::hex << (c&0xff) << ", ";
         if (++lineCount == 10) {
-            ofs << endl;
+            ofs << std::endl;
             lineCount = 0;
         }
     }
 
 
-    ofs << "};" << endl;
-    ofs << "extern const size_t _resource_" << sym << "_len = sizeof(_resource_" << sym << ");";
+    ofs << "};" << std::endl;
+    ofs << "extern const size_t resource_" << symbol_name << "_len = sizeof(resource_" << symbol_name << ");";
 
     return EXIT_SUCCESS;
 }
