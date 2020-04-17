@@ -31,14 +31,16 @@ provided in `Resource.h`. Here's an example:
 
     int main() {
 
-        Resource text = LOAD_RESOURCE(frag_glsl);
+        //Resource text = LOAD_RESOURCE(frag_glsl);
+        Resource text = LOAD_RESOURCE(shaders_frag_glsl);
         cout << string(text.data(), text.size()) << endl;
 
         return EXIT_SUCCESS;
     }
 
-NB: To reference the file, replace the `.` in `frag.glsl` with an underscore `_`.
-So, in this example, the symbol name is `frag_glsl`.
+**In this fork, the relative file path is part of the symbol. Because there are sometimes the same file names in different directories.**
+NB: To reference the file, replace the `.` and `/` in `shaders/frag.glsl` with an underscore `_`.
+So, in this example, the symbol name is `shaders_frag_glsl`.
 
 ### Credits...
 
