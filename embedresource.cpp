@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <fstream>
 #include <filesystem>
+#include <string>
 
 
 int main(int argc, char** argv)
@@ -15,23 +16,37 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    //std::ofstream debug_log("debug_log.txt");
-
     std::filesystem::path dst{argv[1]};
     std::filesystem::path src{argv[2]};
 
+    //auto exists = std::filesystem::exists(src);
 
-    std::string symbol_name = src.u8string();
+    std::string symbol_name = src.u8string(); 
     std::replace(symbol_name.begin(), symbol_name.end(), '.', '_');
     std::replace(symbol_name.begin(), symbol_name.end(), '-', '_');
     std::replace(symbol_name.begin(), symbol_name.end(), '/', '_');
+    //std::replace(symbol_name.begin(), symbol_name.end(), '\\', '_');
+
+    //std::string logfilename = std::string("embed_resource_debug_") + symbol_name + std::string(".txt");
+    //std::ofstream debug_log(logfilename);
+
+    /*
+    debug_log << "exists " << exists << '\n';
+    debug_log << "argv[0] " << argv[0] << '\n';
+    debug_log << "src.string() " << src.string() << '\n';
+    debug_log << "dst.parent_path() " << dst.parent_path() << '\n';
+    debug_log << "dst.string() " << dst.string() << '\n';
+    debug_log << "symbol_name " << symbol_name << '\n';
+
+    debug_log.close();
+    */
 
     std::filesystem::create_directories(dst.parent_path());
 
     std::ofstream ofs{dst};
     std::ifstream ifs{src};
 
-    ofs << "#include <stdlib.h>" << std::endl;
+    ofs << "#include <iostream>" << std::endl;
     ofs << "extern const char resource_" << symbol_name << "[] = {" << std::endl;
 
     size_t lineCount = 0;
