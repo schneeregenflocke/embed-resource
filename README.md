@@ -1,7 +1,9 @@
 # Embed Resource
 
+**This fork requires C++17.**
+
 Embed binary files and resources (such as GLSL Shader source files) into
-C++ projects. **This fork requires C++17.**
+C++ projects. 
 
 Include this repository in your CMake based project:
 
@@ -36,8 +38,6 @@ provided in `Resource.h`. Here's an example:
 
         return EXIT_SUCCESS;
     }
-
-**In this fork, the relative file paths are part of the symbols, since identical file names can occur in different directories.**
 
 NB: To reference the file, replace the `.` and `/` in `shaders/frag.glsl` with an underscore `_`.
 So, in this example, the symbol name is `shaders_frag_glsl`.
