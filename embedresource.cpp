@@ -19,18 +19,18 @@ int main(int argc, char** argv)
     std::filesystem::path dst{argv[1]};
     std::filesystem::path src{argv[2]};
 
-    //auto exists = std::filesystem::exists(src);
+    std::string symbol_name = dst.stem().stem().u8string();
 
-    std::string symbol_name = src.u8string(); 
-    std::replace(symbol_name.begin(), symbol_name.end(), '.', '_');
     std::replace(symbol_name.begin(), symbol_name.end(), '-', '_');
-    std::replace(symbol_name.begin(), symbol_name.end(), '/', '_');
-    //std::replace(symbol_name.begin(), symbol_name.end(), '\\', '_');
-
-    //std::string logfilename = std::string("embed_resource_debug_") + symbol_name + std::string(".txt");
-    //std::ofstream debug_log(logfilename);
+    //std::replace(symbol_name.begin(), symbol_name.end(), '.', '_');
+    //std::replace(symbol_name.begin(), symbol_name.end(), '/', '_');
 
     /*
+    std::string logfilename = std::string("embed_resource_debug_") + symbol_name + std::string(".txt");
+    std::ofstream debug_log(logfilename);
+
+    auto exists = std::filesystem::exists(src);
+ 
     debug_log << "exists " << exists << '\n';
     debug_log << "argv[0] " << argv[0] << '\n';
     debug_log << "src.string() " << src.string() << '\n';
@@ -60,7 +60,6 @@ int main(int argc, char** argv)
             lineCount = 0;
         }
     }
-
 
     ofs << "};" << std::endl;
     ofs << "extern const size_t resource_" << symbol_name << "_len = sizeof(resource_" << symbol_name << ");";

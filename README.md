@@ -1,23 +1,26 @@
 # Embed Resource
 
-**This fork requires C++17.**
+*This fork requires C++17.*
 
 Embed binary files and resources (such as GLSL Shader source files) into
 C++ projects. 
 
 Include this repository in your CMake based project:
 
-    git submodule add https://github.com/cyrilcode/embed-resource.git lib/embed-resource
+    git submodule add https://github.com/cyrilcode/embed-resource.git lib/ embed-resource
+
 
 Then add to your CMakeLists.txt for your project:
 
     include_directories(lib/embed-resource)
     add_subdirectory(lib/embed-resource)
 
-Now you can add your resources, by calling the provided `embed_resources()` function in your
-CMakeLists.txt file:
+Now you can add your resources, by calling the provided `embed_resources()` function in your CMakeLists.txt file. *In this fork you have to choose a name after the path (e.g. to avoid name collisions with the same file names from different directories)*: 
 
-    embed_resources(MyResources shaders/vertex.glsl shaders/frag.glsl)
+    embed_resources(MyResources 
+        shaders/vertex.glsl shader
+        shaders/frag.glsl shader
+        )
 
 Then link to your binary by adding the created variable to your add_executable statement:
 
@@ -33,14 +36,14 @@ provided in `Resource.h`. Here's an example:
 
     int main() {
 
-        Resource text = LOAD_RESOURCE(shaders_frag_glsl);
+        Resource text = LOAD_RESOURCE(frag_shader);
         cout << string(text.data(), text.size()) << endl;
 
         return EXIT_SUCCESS;
     }
 
-NB: To reference the file, replace the `.` and `/` in `shaders/frag.glsl` with an underscore `_`.
-So, in this example, the symbol name is `shaders_frag_glsl`.
+*NB: In this fork to reference the file, use the the chosen name and the file name without extensions (`-` will be replaced with an underscore `_`).
+So, in this example, the symbol name is `frag_shader`.*
 
 ### Credits...
 
