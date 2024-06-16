@@ -12,7 +12,7 @@ public:
     const char *begin() const { return resource_data; }
     const char *end() const { return resource_data + data_len; }
 
-    std::string toString() { return std::string(data(), size()); }
+    std::string toString() const { return std::string(data(), size()); }
 
 private:
     const char* resource_data;
