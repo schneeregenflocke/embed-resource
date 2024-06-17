@@ -23,5 +23,5 @@ private:
 #define LOAD_RESOURCE(RESOURCE) ([]() {                                       \
         extern const char resource_##RESOURCE[];                              \
         extern const size_t resource_##RESOURCE##_len;                        \
-        return Resource(resource_##RESOURCE, resource_##RESOURCE##_len - 1);  \
+        return Resource(resource_##RESOURCE, resource_##RESOURCE##_len);      \
         })()
