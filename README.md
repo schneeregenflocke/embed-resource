@@ -2,8 +2,7 @@
 
 *This fork requires C++17.*
 
-Embed binary files and resources (such as GLSL Shader source files) into
-C++ projects. 
+Embed binary files and resources (such as GLSL Shader source files) into C++ projects. 
 
 Include this repository in your CMake based project:
 

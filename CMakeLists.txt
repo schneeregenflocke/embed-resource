@@ -31,6 +31,7 @@ function(embed_resources out_var prefix_var)
             COMMENT "Building binary file for embedding ${out_f}"
             VERBATIM
         )
+
         list(APPEND result "${out_f}")
     endforeach()
 

@@ -4,7 +4,6 @@
 #include <string>
 #include <filesystem>
 
-
 int main(int argc, char** argv)
 {
     if (argc < 3) {
@@ -24,6 +23,12 @@ int main(int argc, char** argv)
     std::replace(sym.begin(), sym.end(), '-', '_');
     //std::replace(sym.begin(), sym.end(), '/', '_');
     //std::replace(sym.begin(), sym.end(), '\\', '_');
+  
+    /*std::string sym(argv[2]);
+    std::replace(sym.begin(), sym.end(), '.', '_');
+    std::replace(sym.begin(), sym.end(), '-', '_');
+    std::replace(sym.begin(), sym.end(), '/', '_');
+    std::replace(sym.begin(), sym.end(), '\\', '_');*/
 
     std::ifstream ifs{src};
     std::ofstream ofs{dst};
@@ -32,6 +37,17 @@ int main(int argc, char** argv)
 
     ofs << "#include <iostream>" << std::endl;
     ofs << "extern const char resource_" << sym << "[] = {" << std::endl;
+  
+    
+
+    std::ifstream ifs;
+    ifs.open(argv[2]);
+
+    std::ofstream ofs;
+    ofs.open(argv[1]);
+
+    ofs << "#include <stdlib.h>" << std::endl;
+    ofs << "extern const char _resource_" << sym << "[] = {" << std::endl;
 
     size_t lineCount = 0;
     while (true)
@@ -49,7 +65,11 @@ int main(int argc, char** argv)
     }
 
     ofs << "};" << std::endl;
+
     ofs << "extern const size_t resource_" << sym << "_len = sizeof(resource_" << sym << ");";
+
+    ofs.close();
+    ifs.close();
 
     return EXIT_SUCCESS;
 }
