@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(EmbedResource)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -14,7 +14,7 @@ function(embed_resources out_var prefix_var)
     #message("ARGV: ${ARGV}")
 
     math(EXPR range_stop "${ARGC}-1")
-    
+
     foreach(index RANGE 1 ${range_stop} 2)
 
         math(EXPR prefix_index "${index} + 1")
